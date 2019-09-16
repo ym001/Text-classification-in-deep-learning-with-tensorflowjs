@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   test_tfjs.html
+   
+   Copyright 2019 yves <yves.mercadier@ac-montpellier.fr>
+   
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+   
+   
+-->
+
+<head>
+<meta charset="utf-8" />
+<title>Text classification with tensorflowjs</title>
+<meta name="generator" content="Geany 1.33" />
+</head>
+
+<body>
+<!-- TensorFlow.js is loading-->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
+
+</body>
+
+<script>
+const  sequenceLength=7
+const epochs=50
+const proportion_train=0.8
+
+var dataset=[["new york was originally dutch", ["new york"]], ["the big apple is great", ["new york"]], ["new york is also called the big apple", ["new york"]], ["nyc is nice", ["new york"]], ["people abbreviate new york city as nyc", ["new york"]], ["the capital of great britain is london", ["london"]], ["london is in the uk", ["london"]], ["london is in england", ["london"]], ["london is in great britain", ["london"]], ["it rains a lot in london", ["london"]], ["london hosts the british museum", ["london"]], ["new york is great and so is london", ["new york", "london"]], ["i like london better than new york", ["new york", "london"]], ["nice day in nyc", ["new york"]], ["welcome to london", ["london"]], ["london is rainy", ["london"]], ["it is raining in britian", ["london"]], ["it is raining in britian and the big apple", ["new york", "london"]], ["it is raining in britian and nyc", ["new york", "london"]], ["hello welcome to new york. enjoy it here and london too", ["new york", "london"]]]
+var doc_train= [];
+var label_train= [];
+for (var i in dataset) {
+	doc_train.push(dataset[i][0])
+	label_train.push(dataset[i][1][0])
+	}
+var dico_word=[]
+var x=[]
+var max_len=0
+for (let doc of doc_train) {
+	//creation of the id of each word in a dictionary.
+	var words = doc.split(' ');
+	for (let w of words){
+		if (dico_word.indexOf(w)==-1){dico_word.push(w)}
+		}
+	//digitization of documents.
+	var sequence=[]
+	for (let w of words){
+		var id=dico_word.indexOf(w)
+		sequence.push(id)
+		}
+	x.push(sequence)
+	//pad
+	if(max_len<words.length){max_len=words.length}
+	}
+//pad sequence
+for (var i in x) {
+	//we add the zeros in the end if it is necessary.
+	while (x[i].length<max_len){x[i].push(0)}
+	//we cut the sequence to the desired size
+	x[i]=x[i].slice(0,sequenceLength)
+}
+
+//define embedding shape matrix
+
+const inputDim    = dico_word.length;
+const outputDim = 150;
+
+//digitization of labels.
+
+dico_label=[]
+for(let label of label_train){
+	if (dico_label.indexOf(label)==-1){dico_label.push(label)}
+	}
+var y=[]
+const nb_class=dico_label.length
+for(let label of label_train){
+	let vector= []
+	for(let  i in dico_label){
+		if(dico_label[i].indexOf(label)){vector[i]=1}
+		else{vector[i]=0}
+		}
+	y.push(vector)
+}
+
+//definition of the set of train and test
+
+var limite=Math.round(x.length*proportion_train)
+x_train = tf.tensor2d(x.slice(0, limite));
+y_train = tf.tensor2d(y.slice(0, limite));
+x_test= tf.tensor2d(x.slice(limite, x.length));
+y_test = y.slice(limite, y.length);
+
+// Define a model
+const model = tf.sequential();
+
+//Add layers to model
+model.add(tf.layers.embedding({
+inputDim: inputDim,
+outputDim: outputDim,
+inputLength: sequenceLength,
+trainable: true
+}));
+// tf.layers.embedding({inputDim: embeddingMatrix.shape[0],outputDim: embeddingMatrix.shape[1],trainable: false,weights: [embeddingMatrix]})
+model.add(
+	tf.layers.bidirectional({layer: tf.layers.lstm({units: 256, returnSequences: true})})
+	);  
+
+model.add(tf.layers.flatten());
+model.add(tf.layers.dense({units: 10, activation: 'relu'}));
+model.add(tf.layers.dense({units: 2, activation: 'softmax'}));
+
+// print out model summary
+//model.summary();
+
+// compile
+console.log('Compilation.')
+model.compile({loss: "categoricalCrossentropy", optimizer: "rmsprop",metrics: ['accuracy']});
+// fit
+async function train() {
+await model.fit(x_train, y_train,{ batchSize: 2,epochs: epochs ,shuffle: true,
+    callbacks: tfvis.show.fitCallbacks(
+      { name: 'Training Performance' },
+      ['loss', 'accuracy'], 
+      { height: 200, callbacks: ['onEpochEnd'] }
+    )});
+}
+console.log('Training :')
+train();
+console.log('Prediction :')
+var predictionsTensor =model.predict(x_test, {batchSize: 5});
+//predictions = Array.from(predictions.dataSync());
+predictions = predictionsTensor.arraySync()
+
+//numerisation des predictions
+y_predictions=[]
+for (let pred of predictions){
+	let vector=[]
+	while ( vector.length<nb_class){vector.push(0)}
+	for (let i in pred){
+		if (pred[i]>0.5){vector[i]=1;}
+		}
+	y_predictions.push(vector)
+}
+
+var True=0;
+for (let i in y_test){
+	if(y_predictions[i].indexOf(1)==y_test[i].indexOf(1)){True++;}
+	}
+var accuracy=True/y_test.length;
+console.log('Accuracy  : '+accuracy)
+
+console.log('End of the script.')
+</script>
+</html>
