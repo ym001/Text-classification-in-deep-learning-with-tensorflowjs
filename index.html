@@ -45,7 +45,7 @@ This is a test of tensorflow:<div id="action"></div>
 </body>
 
 <script>
-document.getElementById("action" ).innerHTML = 'toto';
+document.getElementById("action" ).innerHTML = 'in action';
 
 const  sequenceLength=7
 const epochs=50
@@ -138,7 +138,7 @@ model.add(tf.layers.dense({units: 2, activation: 'softmax'}));
 //model.summary();
 
 // compile
-console.log('Compilation.')
+document.getElementById("action" ).innerHTML = 'Compilation';
 model.compile({loss: "categoricalCrossentropy", optimizer: "rmsprop",metrics: ['accuracy']});
 // fit
 async function train() {
@@ -149,9 +149,13 @@ await model.fit(x_train, y_train,{ batchSize: 2,epochs: epochs ,shuffle: true,
       { height: 200, callbacks: ['onEpochEnd'] }
     )});
 }
-console.log('Training :')
+	
+document.getElementById("action" ).innerHTML = 'Training';
+
 train();
-console.log('Prediction :')
+	
+document.getElementById("action" ).innerHTML = 'Prediction';
+
 var predictionsTensor =model.predict(x_test, {batchSize: 5});
 //predictions = Array.from(predictions.dataSync());
 predictions = predictionsTensor.arraySync()
@@ -174,6 +178,7 @@ for (let i in y_test){
 var accuracy=True/y_test.length;
 console.log('Accuracy  : '+accuracy)
 
-console.log('End of the script.')
+document.getElementById("action" ).innerHTML = 'End of the script.';
+
 </script>
 </html>
