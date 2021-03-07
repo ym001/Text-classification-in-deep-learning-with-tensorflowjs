@@ -36,7 +36,7 @@
 
 <body>
 This is a test of tensorflow:<div id="action"></div>
-
+<input class="favorite styled" type="button" value="Start">
 
 <!-- TensorFlow.js is loading-->
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
@@ -176,7 +176,8 @@ for (let i in y_test){
 	if(y_predictions[i].indexOf(1)==y_test[i].indexOf(1)){True++;}
 	}
 var accuracy=True/y_test.length;
-console.log('Accuracy  : '+accuracy)
+	
+document.getElementById("action" ).innerHTML = 'Accuracy  : '+accuracy;
 
 document.getElementById("action" ).innerHTML = 'End of the script.';
 
