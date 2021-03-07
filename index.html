@@ -37,7 +37,18 @@
 
 <body>
 This is a test of tensorflow:<div id="action"></div>
-<input class="styled" type="button" value="Start">
+<input class="styled" type="button" value="START">
+<script>
+
+var btn = document.querySelector('input');
+
+btn.addEventListener('click', updateBtn);
+
+function updateBtn() {
+  if (btn.value === 'START') {deeplearning();
+  }
+}
+</script>
 
 <!-- TensorFlow.js is loading-->
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
@@ -46,6 +57,7 @@ This is a test of tensorflow:<div id="action"></div>
 </body>
 
 <script>
+function deeplearning() {
 document.getElementById("action" ).innerHTML = 'in action';
 
 const  sequenceLength=7
@@ -181,6 +193,6 @@ var accuracy=True/y_test.length;
 document.getElementById("action" ).innerHTML = 'Accuracy  : '+accuracy;
 
 document.getElementById("action" ).innerHTML = 'End of the script.';
-
+}
 </script>
 </html>
