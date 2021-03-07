@@ -158,7 +158,7 @@ async function train() {
 await model.fit(x_train, y_train,{ batchSize: 2,epochs: epochs ,shuffle: true,
     callbacks: tfvis.show.fitCallbacks(
       { name: 'Training Performance' },
-      ['loss', 'accuracy'], 
+      ['loss', 'acc'], 
       { height: 200, callbacks: ['onEpochEnd'] }
     )});
 }
