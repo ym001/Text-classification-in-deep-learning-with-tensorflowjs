@@ -82,11 +82,11 @@ function viewdataset() {
    	 var row = document.createElement("tr");
 
    	 var cell1 = document.createElement("td");
-   	 var cellText1 = document.createTextNode(dataset[i,0]);
+   	 var cellText1 = document.createTextNode(dataset[i][0]);
    	 cell1.appendChild(cellText1);
    	 row.appendChild(cell);
 	var cell2 = document.createElement("td");
-   	 var cellText2 = document.createTextNode(dataset[i,1]);
+   	 var cellText2 = document.createTextNode(dataset[i][1]);
    	 cell2.appendChild(cellText2);
    	 row.appendChild(cell2);
    	 // add the row to the end of the table body
