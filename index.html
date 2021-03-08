@@ -54,6 +54,7 @@ btntrain.addEventListener('click', updateBtn);
 btndata.addEventListener('click', updateBtn);
 
 function updateBtn() {
+	document.getElementById("action" ).innerHTML = 'test';
   if (btntrain.value === 'START TRAINNING') {deeplearning();}
   if (btndata.value === 'VIEW DATASET') {viewdataset();}
 }
