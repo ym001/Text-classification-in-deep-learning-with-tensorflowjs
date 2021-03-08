@@ -55,6 +55,8 @@ Click on the button to start the learning process of the neural network integrat
 <input class="styled" type="button" value="VIEW DATASET" id="data">
 
 </section>
+<section>
+</section>
 	
 <footer>
 	footer
@@ -83,6 +85,7 @@ function viewdataset() {
 	function generate_table() {
   	// get the reference for the body
   	var body = document.getElementsByTagName("body")[0];
+  	var section = document.getElementsByTagName("section")[1];
 
   	// creates a <table> element and a <tbody> element
   	var tbl = document.createElement("table");
@@ -109,7 +112,7 @@ function viewdataset() {
   // put the <tbody> in the <table>
   tbl.appendChild(tblBody);
   // appends <table> into <body>
-  body.appendChild(tbl);
+  section.appendChild(tbl);
   // sets the border attribute of tbl to 2;
   tbl.setAttribute("border", "2");
 }
