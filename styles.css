@@ -25,6 +25,12 @@
                 inset 2px 2px 3px rgba(0, 0, 0, .6);
 }
 
+.header  {
+    height: 90px;
+    margin: 0;
+    background : #NNNNNN; 
+}
+
 h1 {font-family:Georgia;
     font-size: 30px;
     line-height: 20px;
