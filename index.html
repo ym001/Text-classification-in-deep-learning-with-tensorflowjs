@@ -74,6 +74,7 @@ function viewdataset() {
 
   	// creates a <table> element and a <tbody> element
   	var tbl = document.createElement("table");
+	tbl.id = "tabledata";
   	var tblBody = document.createElement("tbody");
 
   	// creating all cells
@@ -94,14 +95,16 @@ function viewdataset() {
   }
 
   // put the <tbody> in the <table>
+		tabledata
   tbl.appendChild(tblBody);
   // appends <table> into <body>
   body.appendChild(tbl);
   // sets the border attribute of tbl to 2;
   tbl.setAttribute("border", "2");
 }
-	
-generate_table();
+	var el=document.getElementById('tabledata')
+	if(!el){generate_table();}
+	else{el.parentNode.removeChild(el);}
 }
 	
 function deeplearning() {
