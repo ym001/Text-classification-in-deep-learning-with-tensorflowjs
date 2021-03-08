@@ -36,6 +36,27 @@ header/*bandeau haut*/
     /* line-height:111px; */
 }
 
+section/*fond d'ecran*/
+{   
+    position: fixed;
+    top: 111px;
+    left: 0px;
+    right: 231px;
+    bottom: 111px;
+    /* background: url(../image/fond.png); */
+    padding: 0px;
+}
+footer/*bandeau bas*/
+{
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    height: 111px;
+    margin: 0px;
+   
+    background-color: rgb(236,138,1);
+}
 h1 {font-family:Georgia;
     font-size: 30px;
     line-height: 50px;
