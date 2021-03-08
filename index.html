@@ -50,14 +50,9 @@ Click on the button to start the learning process of the neural network integrat
 //var btn = document.querySelector('input');
 var btntrain = document.getElementById('train');
 var btndata = document.getElementById('data');
-btntrain.addEventListener('click', updateBtn);
-btndata.addEventListener('click', updateBtn);
+btntrain.addEventListener('click', deeplearning);
+btndata.addEventListener('click', viewdataset);
 
-function updateBtn() {
-	document.getElementById("action" ).innerHTML = 'test';
-  if (btntrain.value === 'START TRAINNING') {deeplearning();}
-  if (btndata.value === 'VIEW DATASET') {viewdataset();}
-}
 </script>
 
 <!-- TensorFlow.js is loading-->
