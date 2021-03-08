@@ -24,3 +24,13 @@
     box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
                 inset 2px 2px 3px rgba(0, 0, 0, .6);
 }
+
+h6 {font-family:Georgia;
+	line-height:1.2;
+    font-size: 14px;
+    line-height: 20px;
+    padding-bottom:.2em;
+	border-bottom:1px solid #333;
+	margin-top:1em;
+	margin-bottom:.7em;
+	}
