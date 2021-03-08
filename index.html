@@ -43,17 +43,19 @@ In this example, we are going to train a neural network to recognize if a joke i
 	
 Click on the button to start the learning process of the neural network integrated into this web page :<div id="action"></div>
 	
-<input class="styled" type="button" value="START TRAINNING">
-<input class="styled" type="button" value="VIEW DATASET">
+<input class="styled" type="button" value="START TRAINNING" id="train">
+<input class="styled" type="button" value="VIEW DATASET" id="data">
 <script>
 
-var btn = document.querySelector('input');
-
-btn.addEventListener('click', updateBtn);
+//var btn = document.querySelector('input');
+var btntrain = document.getElementById('train');
+var btndata = document.getElementById('data');
+btntrain.addEventListener('click', updateBtn);
+btndata.addEventListener('click', updateBtn);
 
 function updateBtn() {
-  if (btn.value === 'START TRAINNING') {deeplearning();}
-  if (btn.value === 'VIEW DATASET') {viewdataset();}
+  if (btntrain.value === 'START TRAINNING') {deeplearning();}
+  if (btndata.value === 'VIEW DATASET') {viewdataset();}
 }
 </script>
 
