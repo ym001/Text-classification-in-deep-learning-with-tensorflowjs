@@ -25,10 +25,15 @@
                 inset 2px 2px 3px rgba(0, 0, 0, .6);
 }
 
-.header  {
-    height: 140px;
-    margin: 0;
-    background : #FF0000; 
+header/*bandeau haut*/
+{
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    height: 111px;
+    background-color: rgb(236,138,1);
+    /* line-height:111px; */
 }
 
 h1 {font-family:Georgia;
