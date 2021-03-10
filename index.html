@@ -225,10 +225,26 @@ await model.fit(x_train, y_train,{ batchSize: 2,epochs: epochs ,shuffle: true,
     )});
 }
 	
+
+  async function showConfusion() {
+    const [preds, labels] = doPrediction();
+    const confusionMatrix = await tfvis.metrics.confusionMatrix(labels, preds);
+    const container = {
+      name: 'Confusion Matrix',
+      tab: 'Evaluation'
+    };
+    tfvis.render.confusionMatrix(container, {
+      values: confusionMatrix,
+      tickLabels: classNames
+    });
+    labels.dispose();
+  }
+	
 document.getElementById("action" ).innerHTML = 'Training';
 
 train();
-	
+
+showAccuracy()
 document.getElementById("action" ).innerHTML = 'Prediction';
 
 var predictionsTensor =model.predict(x_test, {batchSize: 5});
