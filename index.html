@@ -245,7 +245,7 @@ document.getElementById("action" ).innerHTML = 'Training';
 
 train();
 
-showAccuracy()
+showConfusion()
 document.getElementById("action" ).innerHTML = 'Prediction';
 
 var predictionsTensor =model.predict(x_test, {batchSize: 5});
