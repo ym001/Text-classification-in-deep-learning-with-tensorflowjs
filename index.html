@@ -227,25 +227,11 @@ await model.fit(x_train, y_train,{ batchSize: 2,epochs: epochs ,shuffle: true,
 }
 	
 
-  async function showConfusion() {
-    const [preds, labels] = doPrediction();
-    const confusionMatrix = await tfvis.metrics.confusionMatrix(labels, preds);
-    const container = {
-      name: 'Confusion Matrix',
-      tab: 'Evaluation'
-    };
-    tfvis.render.confusionMatrix(container, {
-      values: confusionMatrix,
-      tickLabels: classNames
-    });
-    labels.dispose();
-  }
 	
 document.getElementById("action" ).innerHTML = 'Training';
 
 train();
 
-showConfusion()
 document.getElementById("action" ).innerHTML = 'Prediction';
 
 var predictionsTensor =model.predict(x_test, {batchSize: 5});
@@ -273,5 +259,31 @@ document.getElementById("action" ).innerHTML = 'Accuracy  : '+accuracy;
 
 document.getElementById("action" ).innerHTML = 'End of the script.';
 }
+	
+function doPrediction() {
+	var preds=new Array();
+	var labels=new Array();
+	for (let i in y_test){
+	 	preds[i]=y_predictions[i].indexOf(1)
+	  	labels[i]=y_test[i].indexOf(1)
+	}
+    return [preds, labels];
+  }
+	
+  async function showConfusion() {
+    const [preds, labels] = doPrediction();
+    const confusionMatrix = await tfvis.metrics.confusionMatrix(labels, preds);
+    const container = {
+      name: 'Confusion Matrix',
+      tab: 'Evaluation'
+    };
+    tfvis.render.confusionMatrix(container, {
+      values: confusionMatrix,
+      tickLabels: classNames
+    });
+    labels.dispose();
+  }
+showConfusion()
+
 </script>
 </html>
