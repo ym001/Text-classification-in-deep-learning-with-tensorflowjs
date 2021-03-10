@@ -263,7 +263,7 @@ document.getElementById("action" ).innerHTML = 'End of the script.';
 function doPrediction() {
 	var preds=new Array();
 	var labels=new Array();
-	consol.log(y_predictions)
+	console.log(y_predictions)
 	for (let i in y_test){
 	 	preds[i]=y_predictions[i].indexOf(1)
 	  	labels[i]=y_test[i].indexOf(1)
