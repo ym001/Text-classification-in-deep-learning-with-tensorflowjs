@@ -258,9 +258,9 @@ var accuracy=True/y_test.length;
 document.getElementById("action" ).innerHTML = 'Accuracy  : '+accuracy;
 
 document.getElementById("action" ).innerHTML = 'End of the script.';
-}
+
 	
-function doPrediction(y_predictions) {
+function doPrediction() {
 	var preds=new Array();
 	var labels=new Array();
 	console.log(y_predictions)
@@ -270,7 +270,7 @@ function doPrediction(y_predictions) {
 	}
     return [preds, labels];
   }
-console.log(doPrediction(y_predictions))
+console.log(doPrediction())
 
   async function showConfusion() {
     const [preds, labels] = doPrediction();
@@ -286,6 +286,6 @@ console.log(doPrediction(y_predictions))
     labels.dispose();
   }
 showConfusion()
-
+}
 </script>
 </html>
