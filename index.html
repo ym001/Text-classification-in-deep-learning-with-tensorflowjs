@@ -274,7 +274,7 @@ function doPrediction() {
   async function showConfusion() {
     const [preds, labels] = doPrediction();
 	  console.log(labels)
-    const confusionMatrix = await tfvis.metrics.confusionMatrix(labels, preds);
+    const confusionMatrix = await tfvis.metrics.confusionMatrix(tf.tensor1d(labels), preds);
     const container = {
       name: 'Confusion Matrix',
       tab: 'Evaluation'
