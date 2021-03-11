@@ -259,21 +259,21 @@ document.getElementById("action" ).innerHTML = 'Accuracy  : '+accuracy;
 
 document.getElementById("action" ).innerHTML = 'End of the script.';
 
+const classNames = ['Funny','Not funny'];
 	
 function doPrediction() {
 	var preds=new Array();
 	var labels=new Array();
-	console.log(y_predictions)
 	for (let i in y_test){
 	 	preds[i]=y_predictions[i].indexOf(1)
 	  	labels[i]=y_test[i].indexOf(1)
 	}
     return [preds, labels];
   }
-console.log(doPrediction())
-
+	
   async function showConfusion() {
     const [preds, labels] = doPrediction();
+	  console.log(labels)
     const confusionMatrix = await tfvis.metrics.confusionMatrix(labels, preds);
     const container = {
       name: 'Confusion Matrix',
