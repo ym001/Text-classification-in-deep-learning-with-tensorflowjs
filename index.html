@@ -248,7 +248,6 @@ for (let pred of predictions){
 	y_predictions.push(vector)
 }
 	
-console.log(y_predictions)
 
 var True=0;
 for (let i in y_test){
@@ -271,7 +270,8 @@ function doPrediction() {
 	}
     return [preds, labels];
   }
-	
+console.log(doPrediction())
+
   async function showConfusion() {
     const [preds, labels] = doPrediction();
     const confusionMatrix = await tfvis.metrics.confusionMatrix(labels, preds);
